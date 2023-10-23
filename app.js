@@ -1,12 +1,28 @@
-// https://medium.com/@charming_rust_oyster_221/node-js-express-%E5%AE%89%E8%A3%9D%E8%A8%AD%E7%BD%AE%E8%88%87%E7%B0%A1%E5%96%AE%E5%AF%A6%E4%BD%9C-5920e1d70d9d
+// app.js
 
-var express = require("express");
-var app = express();
+// 導入express
+const express = require("express");
+const app = express();
+const port = 4000;
+// 導入body-parser解析前端回傳的數據
+const bodyParser = require("body-parser");
 
-app.get("/", function (req, res) {
-  res.send("Hello World!");
-});
+// 設置樣版引擎
+app.set("view engine", "ejs");
+// 指定目錄
+app.set("views", "views");
+// 使用bodyParser解析post請求表單的數據
+app.use(bodyParser.urlencoded({ extended: true }));
+// 設置靜態資料夾
+app.use(express.static("public"));
 
-app.listen(4000, function () {
-  console.log("Example app listening on port 4000!");
+// 導入controllers
+const messageController = require("./controllers/messageController");
+
+// 建立路由
+app.get("/", messageController.getAllMessages);
+app.post("/addMessage", messageController.addMessage);
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 });
