@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="/styles.css" />
+    <title>留言板</title>
+  </head>
+  <body>
+    <h1>發表一篇圖文</h1>
+    <form method="post" action="/addMessage">
+      文字內容<input
+        type="text"
+        name="message"
+        placeholder="選擇一張圖片後送出"
+      />
+      <br />
+      <button type="submit">新增留言</button>
+    </form>
+    <h2>留言列表</h2>
+    <ul>
+      <% for (const message of messages) { %>
+      <li><%= message %></li>
+      <% } %>
+    </ul>
+  </body>
+</html>
