@@ -25,11 +25,11 @@
       <% for (const message of messages) { %>
       <li>
         <!-- 顯示留言 -->
-        <p><%= message.text %></p>
+        <p><%= message.message %></p>
 
         <!-- 檢查是否有圖片，有就插入 -->
-        <% if (message.image) { %>
-        <img src="<%= message.image %>" alt="留言圖片" />
+        <% if (message.imageLink) { %>
+        <img src="<%= message.imageLink %>" alt="留言圖片" />
         <% } %>
       </li>
       <hr />

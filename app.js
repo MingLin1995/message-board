@@ -1,39 +1,36 @@
 // app.js
 
-// 導入 express
-const express = require("express");
-// 導入 body-parser
-const bodyParser = require("body-parser");
-// 導入 multer
-const multer = require("multer");
+const express = require("express"); // 使用 Express 框架
+const bodyParser = require("body-parser"); // 用於解析傳入的資料
+const multer = require("multer"); // 用於處理檔案上傳
+require("dotenv").config(); // 從 .env 檔案載入環境變數
 
+// 建立 Express 應用程式
 const app = express();
-const port = 4000;
+const port = 4000; // 設定伺服器監聽的埠口
 
-// 設置樣版為ejs
+// 設定視圖引擎為 EJS
 app.set("view engine", "ejs");
 
-// 使用bodyParser處理request
+// 解析請求主體中的表單數據
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// 建立上傳圖片資料夾
+// 配置檔案上傳的中介軟體，指定上傳檔案的暫存目錄
 const upload = multer({ dest: "uploads/" });
 
-// 設置靜態資料夾
+// 設定靜態檔案目錄和路由，用於提供靜態檔案
 app.use(express.static("public"));
-//如果收到/uploads的請求，則使用uploads資料夾
 app.use("/uploads", express.static("uploads"));
 
-// 導入controllers
+// 引入控制器
 const messageController = require("./controllers/messageController");
 
-// 建立路由，收到請求時，執行getAllMessages
-app.get("/", messageController.getAllMessages);
+// 定義路由和相對應的控制器處理函式
+app.get("/", messageController.getAllMessages); // 處理獲取所有訊息的請求
+app.post("/addMessage", upload.single("image"), messageController.addMessage); // 處理新增訊息的請求，同時處理上傳檔案
 
-// 使用upload.single("image")處理上傳的圖片，傳遞給addMessage
-app.post("/addMessage", upload.single("image"), messageController.addMessage);
-
+// 啟動伺服器，監聽指定埠口
 app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+  console.log(`伺服器正在埠口 ${port} 上運行`);
 });
