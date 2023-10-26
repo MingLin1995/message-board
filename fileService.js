@@ -19,7 +19,7 @@ module.exports = {
         callback(err, null);
       } else {
         const params = {
-          Bucket: "minglin-aws-bucket",
+          Bucket: process.env.BUCKET_NAME,
           Key: `${Date.now()}_${image.originalname}`,
           Body: data,
           ContentType: image.mimetype,
@@ -33,7 +33,7 @@ module.exports = {
             const cloudFrontDomain = process.env.CLOUDFRONT_DOMAIN; // 轉換CloudFront
             const s3Url = s3Data.Location;
             const modifiedS3Url = s3Url.replace(
-              "minglin-aws-bucket.s3.ap-southeast-1.amazonaws.com",
+              "minglin-aws-bucket.s3.ap-northeast-1.amazonaws.com", //有換區域就要更改，可以看s3圖片網址
               cloudFrontDomain
             );
 
